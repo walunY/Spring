@@ -26,6 +26,94 @@
                         使用注解提供
 
      -->
-    <bean id="accountService" class="xyz.walun.service.impl.AccountServiceImpl" scope="singleton" />
+    <!-- 构造函数的方式
+            在bean对象中添加一个constructor-arg的标签。
+                    标签属性有   type    根据类型插入
+                                index   根据元素的索引来加入值    元素索引从0开始
+                                name    根据成员的名称来赋值      常用的方式
+                                =============================================
+                                                上面是插入值的三种方式
+                                value   元素的值，基本类型或者是String
+                                ref    引用的是配置好的bean对象
+             优势：
+                    在获取bean对象时，传入参数是必须的操作，否则对象无法被创建
+             缺点：
+                    改变了bean对象的创建方式，如果不用这些数据，也必须提供
+     -->
+    <bean id="accountService" class="xyz.walun.service.impl.AccountServiceImpl">
+        <!--<constructor-arg type="java.lang.String" value="haha"/>-->
+        <constructor-arg name="string" value="哈哈" />
+        <constructor-arg name="integer" value="12" />
+        <constructor-arg name="date"  ref="now"/>
+    </bean>
+
+
+    <bean id = "now" class="java.util.Date"/>
+
+    <!-- 使用set方式注入                                                              经常用的方法
+            使用property标签
+            标签的属性有
+                    name：是属性的名称—— setter方法去掉set后首字母小写得到
+                    =================================================
+                                    只有一种插入值的方式
+                    value       基本类型和String类型
+                    ref         引用已有的bean对象
+          优势：
+                创建对象没有明确的限制，可以直接调用默认构造函数/
+          缺点：
+                如果某个成员必须有值，但set注入不一定注入成功
+     -->
+    <bean id="accountService2" class="xyz.walun.service.impl.AccountServiceImpl2">
+        <property name="string" value="好" />
+        <property name="date" ref="now"/>
+        <property name="integer" value="10"/>
+     </bean>
+
+
+    <!-- 复杂类型/集合类型的注入
+            用于list结构的注入
+                array list set
+            用于map结构的注入
+                map、props
+         结构相同可以互换
+     -->
+    <bean id="accountService3" class="xyz.walun.service.impl.AccountServiceImpl3">
+        <property name="myStrs">
+            <array>
+                <value>aaaaa</value>
+                <value>bbbbb</value>
+                <value>ccccc</value>
+            </array>
+        </property>
+        <property name="myList">
+            <list>
+                <value>"aaaaa"</value>
+                <value>"bbbbb"</value>
+                <value>"ccccc"</value>
+            </list>
+        </property>
+        <property name="mySet">
+            <set>
+                <value>"aaaaa"</value>
+                <value>"bbbbb"</value>
+                <value>"ccccc"</value>
+            </set>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="k1">v1</prop>
+                <prop key="k2">v2</prop>
+                <prop key="k3">v3</prop>
+            </props>
+        </property>
+        <property name="myMap">
+            <map>
+                <entry key="k1" value="v1"/>
+                <entry key="k2" value="v2"/>
+                <entry key="k3" value="v3"/>
+            </map>
+        </property>
+
+    </bean>
 
 </beans>
