@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- spring对bean的管理细节  -->
+    <!--
+    三种方式创建bean
+    bean的作用范围
+    bean的生命周期
+    -->
+
+
+    <!-- 1、三种创建方式 -->
+    <!-- 第一种使用默认构造函数创建， 如果只配置了id 和 class  就以默认的构造函数创建，
+          如果没有默认的构造函数，那就无法创建 默认构造函数：无参的构造函数
+    <bean id="accountService" class="xyz.walun.service.impl.AccountServiceImpl"></bean>
+    -->
+    <!-- 第二种方式：使用普通工厂中的方法创建对象(使用某个类中的方法创建对象，并存人到spring容器)
+          先将工厂写成bean 在设置要取的bean对象从工厂bean中取
+    <bean id="instanceFactory" class="xyz.walun.factory.InstanceFactory"/>
+    <bean id="accountService" factory-bean="instanceFactory" factory-method="getAccountService"/>
+    -->
+
+    <!-- 使用静态的工厂的方法获得对象
+        直接指向那个类并指定方法
+    <bean id="accountService" class="xyz.walun.factory.StaticFactory" factory-method="getAccountService" />
+    -->
+    <!-- bean的作用范围scope  常用单例和多利
+            singleton       单例
+            prototype       多例
+            request         作用于web的请求范围
+            session         作用于web的会话范围
+            global-session  作用于集群的会话范围，如果不是集群那么就是session
+     -->
+    <bean id="accountService" class="xyz.walun.factory.StaticFactory" factory-method="getAccountService" scope="singleton" />
+    <!-- bean的生命周期
+        单例
+            出生：容器创建
+            活着：伴随着容器
+            死亡：容器销毁
+            生命周期和容器相同
+        多例
+            出生：使用对象时创建
+            活着：调用方法时=对象只要在使用过程中就一直活着
+            死亡：长时间不用，且没有别的对象引用时，有Java的GC回收
+     -->
+</beans>
