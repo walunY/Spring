@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- spring中的依赖注入
+            依赖注入：
+                dependency Injection
+             IOC的作用：
+                降低程序之间的耦合(依赖关系)
+             依赖关系的管理：
+                都交由spring管理
+                在类中需要的其他类对象都由spring来提供，我们只需要在配置文件中说明
+             依赖关系的维护：
+                 就称为依赖注入
+             依赖注入：
+                  能注入的数据: 有三种
+                        基本类型和String
+                        其他的bean类型(配置或注解配置)
+                        复杂类型/集合类型
+                   注入的方式：三种
+                        使用构造函数提供
+                        使用set方法
+                        使用注解提供
+
+     -->
+    <bean id="accountService" class="xyz.walun.service.impl.AccountServiceImpl" scope="singleton" />
+
+</beans>
